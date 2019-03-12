@@ -48,19 +48,20 @@ RSpec.describe 'Session API', type: :request do
         end
     end
 
-    describe 'DELETE /sessions/:id' do 
+    describe 'DELETE /auth/sign_out' do 
         let(:auth_token) { user.auth_token }
 
         before do
-          delete "/sessions/#{auth_token}", params: {}, headers: headers
+          delete '/auth/sign_out', params: {}, headers: headers
         end
 
-        it 'returns status code 204' do 
-            expect(response).to have_http_status(204)
+        it 'returns status code 200' do 
+            expect(response).to have_http_status(200)
         end
 
         it 'changes the user auth token' do 
-            expect(User.find_by(auth_token: auth_token)).to be_nil
+            user.reload
+            expect(user.valid_token?(auth_data['access-token'], auth_data['token'])).to eq(false)
         end
 
     end
