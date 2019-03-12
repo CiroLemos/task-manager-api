@@ -58,3 +58,6 @@ gem 'ransack'
 gem 'omniauth'
 
 gem 'devise_token_auth', '~> 1.0'
+
+gem 'rails-i18n', '~> 5.1'
+
